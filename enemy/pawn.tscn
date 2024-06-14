@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0d5o1f0r1uts"]
+
+[ext_resource type="PackedScene" uid="uid://dc5258iwjj2dj" path="res://enemy/enemy.tscn" id="1_w3xyx"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hjb2f"]
+radius = 35.0
+
+[node name="Enemy" instance=ExtResource("1_w3xyx")]
+attack = 5.0
+
+[node name="CollisionShape2D" parent="AttackRange" index="0"]
+shape = SubResource("CircleShape2D_hjb2f")

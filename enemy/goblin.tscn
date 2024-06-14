@@ -1,0 +1,87 @@
+[gd_scene load_steps=9 format=3 uid="uid://bba7nu7ey3660"]
+
+[ext_resource type="PackedScene" uid="uid://dc5258iwjj2dj" path="res://enemy/enemy.tscn" id="1_s46o3"]
+[ext_resource type="Texture2D" uid="uid://fr4w0xairq1x" path="res://addons/tiny_swords/enemy/goblin_yellow.png" id="2_qd3vn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6hbx8"]
+radius = 30.0
+
+[sub_resource type="Animation" id="Animation_gf4vf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_lc4ac"]
+resource_name = "idle"
+length = 0.7
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+
+[sub_resource type="Animation" id="Animation_f03p1"]
+resource_name = "walk"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [7, 8, 9, 10, 11, 12]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fvp0d"]
+_data = {
+"RESET": SubResource("Animation_gf4vf"),
+"idle": SubResource("Animation_lc4ac"),
+"walk": SubResource("Animation_f03p1")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n7glo"]
+radius = 36.0
+
+[node name="Enemy" instance=ExtResource("1_s46o3")]
+health = 40.0
+attack = 10.0
+speed = 5.0
+
+[node name="CollisionShape2D" parent="." index="0"]
+shape = SubResource("CircleShape2D_6hbx8")
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("2_qd3vn")
+hframes = 7
+vframes = 5
+
+[node name="AnimationPlayer" parent="." index="2"]
+libraries = {
+"": SubResource("AnimationLibrary_fvp0d")
+}
+
+[node name="CollisionShape2D" parent="AttackRange" index="0"]
+shape = SubResource("CircleShape2D_n7glo")

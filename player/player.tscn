@@ -1,0 +1,137 @@
+[gd_scene load_steps=13 format=3 uid="uid://dowd5a7cvj7wj"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_7lstr"]
+[ext_resource type="Texture2D" uid="uid://bld5jve1td6vj" path="res://addons/tiny_swords/hero/warrior_red.png" id="1_jlnge"]
+[ext_resource type="PackedScene" uid="uid://dy6y0nlhgivtr" path="res://effects/death.tscn" id="2_ccrqf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_34sy6"]
+radius = 28.0
+
+[sub_resource type="Animation" id="Animation_vmq2v"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_xx1qk"]
+resource_name = "attack"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 15, 16, 17]
+}
+
+[sub_resource type="Animation" id="Animation_4lfpm"]
+resource_name = "idle"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_shmd4"]
+resource_name = "walk"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 7, 8, 9, 10, 11]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eaw65"]
+_data = {
+"RESET": SubResource("Animation_vmq2v"),
+"attack": SubResource("Animation_xx1qk"),
+"idle": SubResource("Animation_4lfpm"),
+"walk": SubResource("Animation_shmd4")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3p0o4"]
+radius = 100.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pao44"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ukwhv"]
+bg_color = Color(0.77, 0, 0, 1)
+
+[node name="Player" type="CharacterBody2D"]
+y_sort_enabled = true
+motion_mode = 1
+script = ExtResource("1_7lstr")
+death_fx = ExtResource("2_ccrqf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -32)
+shape = SubResource("CircleShape2D_34sy6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -32)
+texture = ExtResource("1_jlnge")
+hframes = 6
+vframes = 8
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_eaw65")
+}
+autoplay = "idle"
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, -32)
+shape = SubResource("CircleShape2D_3p0o4")
+debug_color = Color(0.980392, 0.133333, 0, 0)
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.0
+offset_top = 6.0
+offset_right = 19.0
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.4, 1)
+theme_override_styles/background = SubResource("StyleBoxFlat_pao44")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ukwhv")
+value = 60.0
+show_percentage = false

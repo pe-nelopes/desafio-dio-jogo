@@ -1,0 +1,86 @@
+[gd_scene load_steps=9 format=3 uid="uid://b7q6bqn657ept"]
+
+[ext_resource type="PackedScene" uid="uid://dc5258iwjj2dj" path="res://enemy/enemy.tscn" id="1_tnmff"]
+[ext_resource type="Texture2D" uid="uid://e7p7bfo5w5wv" path="res://addons/tiny_swords/enemy/sheep.png" id="2_8ayp4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yvo3m"]
+radius = 22.0
+
+[sub_resource type="Animation" id="Animation_byhjx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_ndb3i"]
+resource_name = "idle"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_c771p"]
+resource_name = "walk"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11, 12, 11]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1xxq5"]
+_data = {
+"RESET": SubResource("Animation_byhjx"),
+"idle": SubResource("Animation_ndb3i"),
+"walk": SubResource("Animation_c771p")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bpqf8"]
+radius = 26.0
+
+[node name="Enemy" instance=ExtResource("1_tnmff")]
+health = 5.0
+speed = 15.0
+
+[node name="CollisionShape2D" parent="." index="0"]
+shape = SubResource("CircleShape2D_yvo3m")
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("2_8ayp4")
+hframes = 8
+vframes = 2
+
+[node name="AnimationPlayer" parent="." index="2"]
+libraries = {
+"": SubResource("AnimationLibrary_1xxq5")
+}
+
+[node name="CollisionShape2D" parent="AttackRange" index="0"]
+shape = SubResource("CircleShape2D_bpqf8")
