@@ -1,11 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://dowd5a7cvj7wj"]
+[gd_scene load_steps=16 format=3 uid="uid://dowd5a7cvj7wj"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_7lstr"]
 [ext_resource type="Texture2D" uid="uid://bld5jve1td6vj" path="res://addons/tiny_swords/hero/warrior_red.png" id="1_jlnge"]
 [ext_resource type="PackedScene" uid="uid://dy6y0nlhgivtr" path="res://effects/death.tscn" id="2_ccrqf"]
+[ext_resource type="Script" path="res://player/Skill.gd" id="4_n7wrx"]
+[ext_resource type="PackedScene" uid="uid://bmmyl6j1qq4g6" path="res://player/magic_circle.tscn" id="5_66b41"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_34sy6"]
-radius = 28.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_m56fy"]
+radius = 20.0
 
 [sub_resource type="Animation" id="Animation_vmq2v"]
 length = 0.001
@@ -83,6 +85,9 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_3p0o4"]
 radius = 100.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_l8lhm"]
+radius = 52.0
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pao44"]
 bg_color = Color(0, 0, 0, 1)
 
@@ -90,14 +95,13 @@ bg_color = Color(0, 0, 0, 1)
 bg_color = Color(0.77, 0, 0, 1)
 
 [node name="Player" type="CharacterBody2D"]
-y_sort_enabled = true
 motion_mode = 1
 script = ExtResource("1_7lstr")
 death_fx = ExtResource("2_ccrqf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -32)
-shape = SubResource("CircleShape2D_34sy6")
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_m56fy")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -32)
@@ -112,11 +116,19 @@ libraries = {
 autoplay = "idle"
 
 [node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(0, -32)
 shape = SubResource("CircleShape2D_3p0o4")
 debug_color = Color(0.980392, 0.133333, 0, 0)
+
+[node name="CollectRadius" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectRadius"]
+position = Vector2(0, -32)
+shape = SubResource("CircleShape2D_l8lhm")
+debug_color = Color(0.959808, 0, 0.51063, 0)
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 anchors_preset = 8
@@ -135,3 +147,8 @@ theme_override_styles/background = SubResource("StyleBoxFlat_pao44")
 theme_override_styles/fill = SubResource("StyleBoxFlat_ukwhv")
 value = 60.0
 show_percentage = false
+
+[node name="Skill" type="Node2D" parent="."]
+script = ExtResource("4_n7wrx")
+cooldown = 20.0
+skill_scene = ExtResource("5_66b41")

@@ -3,28 +3,34 @@ extends CharacterBody2D
 
 static var current_player: Player
 
-@export var speed = 30.0
+@export_category("Stats")
+@export var max_health: float = 100.0
 @export var attack: float = 5.0
-@export var health: float = 100.0
+@export var speed = 30.0
+
+@export_category("Effects")
 @export var death_fx: PackedScene
 
+
+var health: float
 var is_right: bool = false
 var is_running: bool = false
 var is_attacking: bool = false
 
 var direction: Vector2
-var tween: Tween
+var damage_tween: Tween
+var healing_tween: Tween
 
 @onready var health_bar: ProgressBar = $HealthBar
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var animation: AnimationPlayer = $AnimationPlayer
 @onready var hitbox: Area2D = $Hitbox
-
-
+@onready var collect_radius: Area2D = $CollectRadius
 
 
 func _ready() -> void:
 	current_player = self
+	health = max_health
 	health_bar.max_value = health
 	health_bar.value = health
 	
@@ -32,6 +38,7 @@ func _ready() -> void:
 func _physics_process(_delta):
 	_attack_process()
 	_move_process()
+	_check_collect_radius()
 
 
 func _process(_delta):
@@ -48,17 +55,31 @@ func take_damage(damage: float) -> void:
 	health -= damage
 	health_bar.value = health
 	
-	if tween and tween.is_running():
-		tween.stop()
+	if damage_tween and damage_tween.is_running():
+		damage_tween.stop()
 	
-	modulate = Color.RED
-	tween = create_tween()
-	tween.set_ease(Tween.EASE_IN)
-	tween.set_trans(Tween.TRANS_QUINT)
-	tween.tween_property(self, "modulate", Color.WHITE, 0.2)
+	self_modulate = Color.RED
+	damage_tween = create_tween()
+	damage_tween.set_ease(Tween.EASE_IN)
+	damage_tween.set_trans(Tween.TRANS_QUINT)
+	damage_tween.tween_property(self, "modulate", Color.WHITE, 0.2)
 	
 	if health <= 0 and death_fx:
 		die()
+
+
+func heal(value: float):
+	health = min(health+value, max_health)
+	health_bar.value = health
+	
+	if healing_tween and healing_tween.is_running():
+		healing_tween.stop()
+	
+	self_modulate = Color.GREEN_YELLOW
+	healing_tween = create_tween()
+	healing_tween.set_ease(Tween.EASE_IN)
+	healing_tween.set_trans(Tween.TRANS_QUINT)
+	healing_tween.tween_property(self, "modulate", Color.WHITE, 0.2)
 
 
 func die() -> void:
@@ -67,6 +88,13 @@ func die() -> void:
 	get_parent().add_child(death)
 	
 	queue_free()
+
+
+func _check_collect_radius() -> void:
+	for item in collect_radius.get_overlapping_areas():
+		if item.is_in_group("healing"):
+			heal(item.healing_value)
+			item.queue_free()
 
 
 func _attack_process() -> void:

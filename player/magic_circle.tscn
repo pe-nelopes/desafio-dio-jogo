@@ -1,0 +1,139 @@
+[gd_scene load_steps=8 format=3 uid="uid://bmmyl6j1qq4g6"]
+
+[ext_resource type="Script" path="res://player/magic_circle.gd" id="1_p8yej"]
+[ext_resource type="Texture2D" uid="uid://dohpkdk8ju7jb" path="res://addons/kenney_particle_pack/magic_02.png" id="2_gsmaa"]
+[ext_resource type="Texture2D" uid="uid://cqcpyuu3yjj52" path="res://addons/kenney_particle_pack/circle_02.png" id="3_uavc7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_01lrc"]
+radius = 260.0
+
+[sub_resource type="Animation" id="Animation_6nff1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D/MagicCircle:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Node2D/Pulse:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.45474, 1.45474)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Node2D/Pulse:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_pinhq"]
+resource_name = "default"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D/MagicCircle:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Node2D/Pulse:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1e-05, 1e-05), Vector2(1.45474, 1.45474)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Node2D/Pulse:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.9, 1),
+"transitions": PackedFloat32Array(4.59479, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.9),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"deal_damage"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_etvax"]
+_data = {
+"RESET": SubResource("Animation_6nff1"),
+"default": SubResource("Animation_pinhq")
+}
+
+[node name="Skill" type="Node2D"]
+script = ExtResource("1_p8yej")
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_01lrc")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_etvax")
+}
+autoplay = "default"
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="MagicCircle" type="Sprite2D" parent="Node2D"]
+scale = Vector2(1.89288, 1.89288)
+texture = ExtResource("2_gsmaa")
+
+[node name="Pulse" type="Sprite2D" parent="Node2D"]
+modulate = Color(1, 1, 1, 0)
+scale = Vector2(1.45474, 1.45474)
+texture = ExtResource("3_uavc7")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="queue_free"]

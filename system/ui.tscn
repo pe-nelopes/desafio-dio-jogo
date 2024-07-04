@@ -1,0 +1,66 @@
+[gd_scene load_steps=5 format=3 uid="uid://8xfje87ii7ho"]
+
+[ext_resource type="Texture2D" uid="uid://b1y7yxsjbpvbk" path="res://addons/tiny_swords/gui/carved_ui.png" id="1_b1k71"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i5ew3"]
+
+[sub_resource type="SystemFont" id="SystemFont_gntt1"]
+font_names = PackedStringArray("Lucida Sans Unicode")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dctxk"]
+texture = ExtResource("1_b1k71")
+texture_margin_left = 32.0
+texture_margin_top = 32.0
+texture_margin_right = 32.0
+texture_margin_bottom = 32.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="UI" type="CanvasLayer"]
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_i5ew3")
+
+[node name="GameTimer" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -59.0
+offset_right = 61.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_gntt1")
+theme_override_font_sizes/font_size = 32
+text = "00:00"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Panel" type="Panel" parent="Panel"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -136.0
+offset_top = 16.0
+offset_right = -16.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_dctxk")
+
+[node name="Label" type="Label" parent="Panel/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0000"
+horizontal_alignment = 1
+vertical_alignment = 1

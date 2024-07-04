@@ -1,0 +1,77 @@
+[gd_scene load_steps=12 format=3 uid="uid://dine80ngjadh1"]
+
+[ext_resource type="Texture2D" uid="uid://bv017ife731gq" path="res://addons/tiny_swords/resources/m_spawn.png" id="1_2w5g5"]
+[ext_resource type="Script" path="res://system/healing_item.gd" id="1_e2i0s"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wjpab"]
+radius = 24.0832
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1tiss"]
+atlas = ExtResource("1_2w5g5")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6y7dd"]
+atlas = ExtResource("1_2w5g5")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eyevj"]
+atlas = ExtResource("1_2w5g5")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vluv8"]
+atlas = ExtResource("1_2w5g5")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1bn1v"]
+atlas = ExtResource("1_2w5g5")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m6i3f"]
+atlas = ExtResource("1_2w5g5")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_14bne"]
+atlas = ExtResource("1_2w5g5")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ccvkp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1tiss")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6y7dd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eyevj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vluv8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1bn1v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m6i3f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_14bne")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Meat" type="Area2D" groups=["healing"]]
+script = ExtResource("1_e2i0s")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_wjpab")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -11)
+sprite_frames = SubResource("SpriteFrames_ccvkp")
+autoplay = "default"
+frame = 6
+frame_progress = 1.0

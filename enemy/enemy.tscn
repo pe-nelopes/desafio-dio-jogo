@@ -1,8 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://dc5258iwjj2dj"]
+[gd_scene load_steps=13 format=3 uid="uid://dc5258iwjj2dj"]
 
 [ext_resource type="Script" path="res://enemy/enemy.gd" id="1_4j8is"]
 [ext_resource type="Texture2D" uid="uid://bythyb10wpplc" path="res://addons/tiny_swords/enemy/pawn_yellow.png" id="2_55xqb"]
 [ext_resource type="PackedScene" uid="uid://dy6y0nlhgivtr" path="res://effects/death.tscn" id="2_kdf5q"]
+[ext_resource type="PackedScene" uid="uid://by835fnturnm2" path="res://effects/damage_number.tscn" id="2_sldth"]
+[ext_resource type="PackedScene" uid="uid://dine80ngjadh1" path="res://system/meat.tscn" id="2_u7ybe"]
 [ext_resource type="Script" path="res://enemy/follow_behaviour.gd" id="4_6ym4d"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7e5l6"]
@@ -68,9 +70,11 @@ _data = {
 radius = 42.0
 
 [node name="Enemy" type="CharacterBody2D" groups=["enemy"]]
-y_sort_enabled = true
 motion_mode = 1
 script = ExtResource("1_4j8is")
+drop_chance = 0.1
+drop_list = Array[PackedScene]([ExtResource("2_u7ybe")])
+damage_fx = ExtResource("2_sldth")
 death_fx = ExtResource("2_kdf5q")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

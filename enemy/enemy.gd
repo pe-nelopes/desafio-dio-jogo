@@ -1,14 +1,23 @@
 class_name Enemy
 extends CharacterBody2D
 
+@export_category("Stats")
 @export var health: float = 20.0
 @export var attack: float = 1.0
 @export var speed: float = 10.0
 
+@export_category("Drops")
+@export var drop_chance: float = 1
+@export var drop_list: Array[PackedScene]
+
+@export_category("Effects")
+@export var damage_fx: PackedScene
+@export var death_fx: PackedScene
+
 @onready var animation: AnimationPlayer = $AnimationPlayer
 @onready var attack_range: Area2D = $AttackRange
 
-@export var death_fx: PackedScene
+
 
 var is_attacking: bool = false
 var is_right: bool = false
@@ -30,6 +39,11 @@ func _process(_delta: float) -> void:
 func take_damage(damage: float) -> void:
 	health -= damage
 	
+	var effect = damage_fx.instantiate()
+	effect.set_value(damage)
+	effect.position = self.position
+	get_parent().add_child(effect)
+	
 	modulate = Color.RED
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_IN)
@@ -44,6 +58,11 @@ func die() -> void:
 	var death = death_fx.instantiate()
 	death.position = self.position
 	get_parent().add_child(death)
+	
+	if randf() < drop_chance:
+		var drop = drop_list.pick_random().instantiate()
+		drop.position = self.position
+		get_parent().add_child(drop)
 	
 	queue_free()
 
