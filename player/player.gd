@@ -58,11 +58,11 @@ func take_damage(damage: float) -> void:
 	if damage_tween and damage_tween.is_running():
 		damage_tween.stop()
 	
-	self_modulate = Color.RED
+	sprite.self_modulate = Color.RED
 	damage_tween = create_tween()
 	damage_tween.set_ease(Tween.EASE_IN)
 	damage_tween.set_trans(Tween.TRANS_QUINT)
-	damage_tween.tween_property(self, "modulate", Color.WHITE, 0.2)
+	damage_tween.tween_property(sprite, "self_modulate", Color.WHITE, 0.2)
 	
 	if health <= 0 and death_fx:
 		die()
@@ -75,17 +75,19 @@ func heal(value: float):
 	if healing_tween and healing_tween.is_running():
 		healing_tween.stop()
 	
-	self_modulate = Color.GREEN_YELLOW
+	sprite.self_modulate = Color.GREEN_YELLOW
 	healing_tween = create_tween()
 	healing_tween.set_ease(Tween.EASE_IN)
 	healing_tween.set_trans(Tween.TRANS_QUINT)
-	healing_tween.tween_property(self, "modulate", Color.WHITE, 0.2)
+	healing_tween.tween_property(sprite, "self_modulate", Color.WHITE, 0.2)
 
 
 func die() -> void:
 	var death = death_fx.instantiate()
 	death.position = self.position
 	get_parent().add_child(death)
+	
+	Level.current_level.end_level()
 	
 	queue_free()
 

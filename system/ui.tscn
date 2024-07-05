@@ -6,6 +6,7 @@
 
 [sub_resource type="SystemFont" id="SystemFont_gntt1"]
 font_names = PackedStringArray("Lucida Sans Unicode")
+subpixel_positioning = 0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dctxk"]
 texture = ExtResource("1_b1k71")
@@ -42,6 +43,7 @@ horizontal_alignment = 1
 vertical_alignment = 2
 
 [node name="Panel" type="Panel" parent="Panel"]
+visible = false
 layout_mode = 1
 anchors_preset = 11
 anchor_left = 1.0

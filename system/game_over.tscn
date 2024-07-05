@@ -1,0 +1,253 @@
+[gd_scene load_steps=17 format=3 uid="uid://d36sk4vim0s5m"]
+
+[ext_resource type="Script" path="res://system/game_over.gd" id="1_6yrw3"]
+[ext_resource type="Texture2D" uid="uid://bpsstrtuhfa4y" path="res://addons/tiny_swords/gui/ribbon_yellow_3slides.png" id="1_omibv"]
+[ext_resource type="Texture2D" uid="uid://b1y7yxsjbpvbk" path="res://addons/tiny_swords/gui/carved_ui.png" id="2_co5un"]
+[ext_resource type="StyleBox" uid="uid://c8vdyk15ccv6w" path="res://system/blue_button.tres" id="4_v4lg4"]
+[ext_resource type="Texture2D" uid="uid://cnjxb1cuxr1vy" path="res://addons/tiny_swords/gui/button_blue_pressed.png" id="4_w5xyv"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_67nir"]
+texture = ExtResource("1_omibv")
+texture_margin_left = 64.0
+texture_margin_right = 64.0
+axis_stretch_horizontal = 2
+
+[sub_resource type="SystemFont" id="SystemFont_sfiuc"]
+font_names = PackedStringArray("Fantasy")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tb8b4"]
+texture = ExtResource("2_co5un")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[sub_resource type="SystemFont" id="SystemFont_8n0pg"]
+font_names = PackedStringArray("Lucida Sans Unicode")
+
+[sub_resource type="LabelSettings" id="LabelSettings_1u8xe"]
+font = SubResource("SystemFont_8n0pg")
+font_size = 20
+font_color = Color(0, 0, 0, 1)
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_k0swc"]
+texture = ExtResource("4_w5xyv")
+texture_margin_left = 32.0
+texture_margin_right = 32.0
+axis_stretch_horizontal = 2
+
+[sub_resource type="SystemFont" id="SystemFont_x8jlr"]
+font_names = PackedStringArray("Lucida Sans Unicode")
+
+[sub_resource type="LabelSettings" id="LabelSettings_f34kr"]
+font = SubResource("SystemFont_x8jlr")
+font_size = 26
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_5mooe"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_evmtt"]
+resource_name = "default"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4u38x"]
+_data = {
+"RESET": SubResource("Animation_5mooe"),
+"default": SubResource("Animation_evmtt")
+}
+
+[node name="GameOver" type="CanvasLayer"]
+script = ExtResource("1_6yrw3")
+
+[node name="Panel" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 150.0
+offset_top = 86.0
+offset_right = -150.0
+offset_bottom = -86.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.498039)
+
+[node name="Panel" type="Panel" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -275.0
+offset_top = 105.0
+offset_right = 275.0
+offset_bottom = 234.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_67nir")
+
+[node name="Label" type="Label" parent="Panel/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -26.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 4
+theme_override_constants/shadow_outline_size = 2
+theme_override_fonts/font = SubResource("SystemFont_sfiuc")
+theme_override_font_sizes/font_size = 48
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InfoPanel" type="Panel" parent="Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -199.0
+offset_top = -281.0
+offset_right = 197.0
+offset_bottom = -173.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxTexture_tb8b4")
+
+[node name="CenterContainer" type="CenterContainer" parent="Panel/InfoPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="Panel/InfoPanel/CenterContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 5
+columns = 2
+
+[node name="Label" type="Label" parent="Panel/InfoPanel/CenterContainer/GridContainer"]
+layout_mode = 2
+text = "Time survived"
+label_settings = SubResource("LabelSettings_1u8xe")
+
+[node name="TimeLabel" type="Label" parent="Panel/InfoPanel/CenterContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "00:00"
+label_settings = SubResource("LabelSettings_1u8xe")
+horizontal_alignment = 2
+
+[node name="Label3" type="Label" parent="Panel/InfoPanel/CenterContainer/GridContainer"]
+layout_mode = 2
+text = "Monsters defeated"
+label_settings = SubResource("LabelSettings_1u8xe")
+
+[node name="MonsterLabel" type="Label" parent="Panel/InfoPanel/CenterContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0000"
+label_settings = SubResource("LabelSettings_1u8xe")
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="Panel/InfoPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -91.0
+offset_top = 24.0
+offset_right = 91.0
+offset_bottom = 93.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/normal = ExtResource("4_v4lg4")
+theme_override_styles/hover = ExtResource("4_v4lg4")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_k0swc")
+
+[node name="Label" type="Label" parent="Panel/InfoPanel/Button"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Restart"
+label_settings = SubResource("LabelSettings_f34kr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button2" type="Button" parent="Panel/InfoPanel"]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -180.0
+offset_top = 33.0
+offset_bottom = 102.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/normal = ExtResource("4_v4lg4")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_k0swc")
+
+[node name="Label2" type="Label" parent="Panel/InfoPanel/Button2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Menu"
+label_settings = SubResource("LabelSettings_f34kr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_4u38x")
+}
+autoplay = "default"
+
+[connection signal="pressed" from="Panel/InfoPanel/Button" to="." method="_on_button_pressed"]

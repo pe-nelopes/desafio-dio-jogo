@@ -64,6 +64,7 @@ func die() -> void:
 		drop.position = self.position
 		get_parent().add_child(drop)
 	
+	Level.current_level.increase_mosnter_counter()
 	queue_free()
 
 

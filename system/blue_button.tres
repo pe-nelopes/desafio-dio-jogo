@@ -1,0 +1,9 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://c8vdyk15ccv6w"]
+
+[ext_resource type="Texture2D" uid="uid://1s0fnlh11agt" path="res://addons/tiny_swords/gui/button_blue.png" id="1_5pjn4"]
+
+[resource]
+texture = ExtResource("1_5pjn4")
+texture_margin_left = 32.0
+texture_margin_right = 32.0
+axis_stretch_horizontal = 2

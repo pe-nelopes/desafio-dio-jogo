@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://player/player.gd" id="1_7lstr"]
 [ext_resource type="Texture2D" uid="uid://bld5jve1td6vj" path="res://addons/tiny_swords/hero/warrior_red.png" id="1_jlnge"]
 [ext_resource type="PackedScene" uid="uid://dy6y0nlhgivtr" path="res://effects/death.tscn" id="2_ccrqf"]
-[ext_resource type="Script" path="res://player/Skill.gd" id="4_n7wrx"]
+[ext_resource type="Script" path="res://player/skill.gd" id="4_n7wrx"]
 [ext_resource type="PackedScene" uid="uid://bmmyl6j1qq4g6" path="res://player/magic_circle.tscn" id="5_66b41"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m56fy"]

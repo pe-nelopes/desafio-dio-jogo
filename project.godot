@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Desafio Jogo"
+config/name="Tiny Hero Dio"
 run/main_scene="res://level/main_level.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/stretch/mode="canvas_items"
 
 [input]
 
